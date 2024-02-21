@@ -3,7 +3,7 @@
 #include <random>
 #include <chrono>
 
-// генерирует случайное число от 1 до 7
+// ГЈГҐГ­ГҐГ°ГЁГ°ГіГҐГІ Г±Г«ГіГ·Г Г©Г­Г®ГҐ Г·ГЁГ±Г«Г® Г®ГІ 1 Г¤Г® 7
 int getRandomNumber()
 {
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -14,31 +14,31 @@ int getRandomNumber()
 
 Piece::Piece(int rotation, int currentPiece, Cell* shapes, int spawnX) : rotation(rotation), currentPiece(currentPiece)
 {
-    // копируем возможные варианты расположения фигуры в массив
+    // ГЄГ®ГЇГЁГ°ГіГҐГ¬ ГўГ®Г§Г¬Г®Г¦Г­Г»ГҐ ГўГ Г°ГЁГ Г­ГІГ» Г°Г Г±ГЇГ®Г«Г®Г¦ГҐГ­ГЁГї ГґГЁГЈГіГ°Г» Гў Г¬Г Г±Г±ГЁГў
     setShapes(shapes);
 
-    // устанавливаем стартовую позицию
+    // ГіГ±ГІГ Г­Г ГўГ«ГЁГўГ ГҐГ¬ Г±ГІГ Г°ГІГ®ГўГіГѕ ГЇГ®Г§ГЁГ¶ГЁГѕ
     this->piecePosition.setPos(spawnX, 0);
     int random = getRandomNumber();
 
-    // представление фигуры четырьмя спрайтами
+    // ГЇГ°ГҐГ¤Г±ГІГ ГўГ«ГҐГ­ГЁГҐ ГґГЁГЈГіГ°Г» Г·ГҐГІГ»Г°ГјГ¬Гї Г±ГЇГ°Г Г©ГІГ Г¬ГЁ
     for (int i = 0; i < 4; i++) 
     {
-        // если фигура это тень
+        // ГҐГ±Г«ГЁ ГґГЁГЈГіГ°Г  ГЅГІГ® ГІГҐГ­Гј
         if (currentPiece == 8)
         {
-            // установить текстуру тени
+            // ГіГ±ГІГ Г­Г®ГўГЁГІГј ГІГҐГЄГ±ГІГіГ°Гі ГІГҐГ­ГЁ
             tileSprite[i].setTextureRect(sf::IntRect(40 * currentPiece, 0, 40, 40));
             this->color = 8;
         }
         else
         {
-            // установить случайную текстуру
+            // ГіГ±ГІГ Г­Г®ГўГЁГІГј Г±Г«ГіГ·Г Г©Г­ГіГѕ ГІГҐГЄГ±ГІГіГ°Гі
             tileSprite[i].setTextureRect(sf::IntRect(40 * random, 0, 40, 40));
             this->color = random;
         }
         tileSprite[i].setTexture(tiles);
-        // установить позицию спрайта на экране
+        // ГіГ±ГІГ Г­Г®ГўГЁГІГј ГЇГ®Г§ГЁГ¶ГЁГѕ Г±ГЇГ°Г Г©ГІГ  Г­Г  ГЅГЄГ°Г Г­ГҐ
         tileSprite[i].setPosition((piecePosition.getX() + shape[i].getX()) * 40 + BOARD_OFFSET_X,
                                   (piecePosition.getY() + shape[i].getY()) * 40 + BOARD_OFFSET_Y);
     }
@@ -46,7 +46,7 @@ Piece::Piece(int rotation, int currentPiece, Cell* shapes, int spawnX) : rotatio
 
 void Piece::setShapes(Cell* newShapes) 
 {
-    // копируем в поле класса варианты расположения фигуры
+    // ГЄГ®ГЇГЁГ°ГіГҐГ¬ Гў ГЇГ®Г«ГҐ ГЄГ«Г Г±Г±Г  ГўГ Г°ГЁГ Г­ГІГ» Г°Г Г±ГЇГ®Г«Г®Г¦ГҐГ­ГЁГї ГґГЁГЈГіГ°Г»
     for (int i = 0; i < 4; i++) 
     {
         for (int j = 0; j < 4; j++) 
@@ -59,7 +59,7 @@ void Piece::setShapes(Cell* newShapes)
 
 void Piece::setCurrentShape() 
 {
-    // устанавливаем 4 спрайта в порядке, установленном текущим поворотом фигуры
+    // ГіГ±ГІГ Г­Г ГўГ«ГЁГўГ ГҐГ¬ 4 Г±ГЇГ°Г Г©ГІГ  Гў ГЇГ®Г°ГїГ¤ГЄГҐ, ГіГ±ГІГ Г­Г®ГўГ«ГҐГ­Г­Г®Г¬ ГІГҐГЄГіГ№ГЁГ¬ ГЇГ®ГўГ®Г°Г®ГІГ®Г¬ ГґГЁГЈГіГ°Г»
     for (int i = 0; i < 4; i++) 
     {
         this->shape[i] = shapes[rotation][i];
@@ -68,18 +68,18 @@ void Piece::setCurrentShape()
 
 void Piece::draw(sf::RenderTarget& target, sf::RenderStates states) const 
 {
-    // для каждого из четырёх спрайтов
+    // Г¤Г«Гї ГЄГ Г¦Г¤Г®ГЈГ® ГЁГ§ Г·ГҐГІГ»Г°ВёГµ Г±ГЇГ°Г Г©ГІГ®Гў
     for (int i = 0; i < 4; i++)
     {
         target.draw(tileSprite[i], states);
     }
 }
 
-const Cell Piece::getPiecePosition() const 
+Cell Piece::getPiecePosition() const 
 {
     return piecePosition;
 }
-// перегрузка для окна следующей фигуры
+// ГЇГҐГ°ГҐГЈГ°ГіГ§ГЄГ  Г¤Г«Гї Г®ГЄГ­Г  Г±Г«ГҐГ¤ГіГѕГ№ГҐГ© ГґГЁГЈГіГ°Г»
 void Piece::setPiecePosition(int x, int y, bool fixedToBoard) 
 {
     piecePosition.setX(x);
@@ -87,12 +87,12 @@ void Piece::setPiecePosition(int x, int y, bool fixedToBoard)
 
     for (int i = 0; i < 4; i++) 
     {
-        // относительно поля (доска начинается с блока границы + отступ в определённое количество пикселей)
-        // + отступ до поля игрового по Y
+        // Г®ГІГ­Г®Г±ГЁГІГҐГ«ГјГ­Г® ГЇГ®Г«Гї (Г¤Г®Г±ГЄГ  Г­Г Г·ГЁГ­Г ГҐГІГ±Гї Г± ГЎГ«Г®ГЄГ  ГЈГ°Г Г­ГЁГ¶Г» + Г®ГІГ±ГІГіГЇ Гў Г®ГЇГ°ГҐГ¤ГҐГ«ВёГ­Г­Г®ГҐ ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГЇГЁГЄГ±ГҐГ«ГҐГ©)
+        // + Г®ГІГ±ГІГіГЇ Г¤Г® ГЇГ®Г«Гї ГЁГЈГ°Г®ГўГ®ГЈГ® ГЇГ® Y
         if (fixedToBoard)
             tileSprite[i].setPosition((piecePosition.getX() + shape[i].getX()) * 40 + BOARD_OFFSET_X,
                                       (piecePosition.getY() + shape[i].getY()) * 40 + BOARD_OFFSET_Y);
-        // к полю не привязаны фигуры в окне next, для разных фигур разные отступы
+        // ГЄ ГЇГ®Г«Гѕ Г­ГҐ ГЇГ°ГЁГўГїГ§Г Г­Г» ГґГЁГЈГіГ°Г» Гў Г®ГЄГ­ГҐ next, Г¤Г«Гї Г°Г Г§Г­Г»Гµ ГґГЁГЈГіГ° Г°Г Г§Г­Г»ГҐ Г®ГІГ±ГІГіГЇГ»
         else
         {
             if (currentPiece == 4)
@@ -107,12 +107,12 @@ void Piece::setPiecePosition(int x, int y, bool fixedToBoard)
         }
     }
 }
-// перегрузка для основного поля
+// ГЇГҐГ°ГҐГЈГ°ГіГ§ГЄГ  Г¤Г«Гї Г®Г±Г­Г®ГўГ­Г®ГЈГ® ГЇГ®Г«Гї
 void Piece::setPiecePosition(int x, int y) 
 {
     setPiecePosition(x, y, true);
 }
-// перегрузка для тени
+// ГЇГҐГ°ГҐГЈГ°ГіГ§ГЄГ  Г¤Г«Гї ГІГҐГ­ГЁ
 void Piece::setPiecePosition(Cell x) 
 {
     setPiecePosition(x.getX(), x.getY(), true);
@@ -165,7 +165,7 @@ int Piece::getCurrentShapeInt() const
     return currentPiece;
 }
 
-Cell* const Piece::getShapes() const 
+Cell* Piece::getShapes() const 
 {
     return (Cell*)shapes;
 }
