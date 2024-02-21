@@ -2,14 +2,14 @@
 
 void Board::initialization(int tileSize)
 {
-    // позиция доски
+    // ГЇГ®Г§ГЁГ¶ГЁГї Г¤Г®Г±ГЄГЁ
     this->setPosition(BOARD_OFFSET_X, BOARD_OFFSET_Y);
 
-    // изменение массива вершин
+    // ГЁГ§Г¬ГҐГ­ГҐГ­ГЁГҐ Г¬Г Г±Г±ГЁГўГ  ГўГҐГ°ГёГЁГ­
     vertices.setPrimitiveType(sf::Quads);
     vertices.resize(this->boardWidth * this->boardHeight * 4);
 
-    // инициализация текстур
+    // ГЁГ­ГЁГ¶ГЁГ Г«ГЁГ§Г Г¶ГЁГї ГІГҐГЄГ±ГІГіГ°
     updateAllTextures(tileSize);
 }
 
@@ -20,11 +20,8 @@ void Board::draw(sf::RenderTarget& target, sf::RenderStates states) const
     target.draw(vertices, states);
 }
 
-Board::Board(int boardWidth, int boardHeight) 
+Board::Board(int boardWidth, int boardHeight) : boardWidth(boardWidth), boardHeight(boardHeight)
 {
-    this->boardWidth = boardWidth;
-    this->boardHeight = boardHeight;
-   
     this->board = new int* [this->boardWidth];
     for (int i = 0; i < this->boardWidth; i++)
         this->board[i] = new int[boardHeight];
@@ -47,30 +44,30 @@ Board::Board(int boardWidth, int boardHeight)
 
 bool Board::collidesWith(int x, int y, Cell* shape)
 {
-    // каждые 4 клетки фигуры
+    // ГЄГ Г¦Г¤Г»ГҐ 4 ГЄГ«ГҐГІГЄГЁ ГґГЁГЈГіГ°Г»
     for (int i = 0; i < 4; i++)
     {
-        // если какая-либо клетка не пуста вернуть истину (столкновение обнаружено)
+        // ГҐГ±Г«ГЁ ГЄГ ГЄГ Гї-Г«ГЁГЎГ® ГЄГ«ГҐГІГЄГ  Г­ГҐ ГЇГіГ±ГІГ  ГўГҐГ°Г­ГіГІГј ГЁГ±ГІГЁГ­Гі (Г±ГІГ®Г«ГЄГ­Г®ГўГҐГ­ГЁГҐ Г®ГЎГ­Г Г°ГіГ¦ГҐГ­Г®)
         if (this->board[x + shape[i].getX()][y + shape[i].getY()] != NONE)
             return true;
     }
-    // если столкновения не обнаружено вернуть ложь
+    // ГҐГ±Г«ГЁ Г±ГІГ®Г«ГЄГ­Г®ГўГҐГ­ГЁГї Г­ГҐ Г®ГЎГ­Г Г°ГіГ¦ГҐГ­Г® ГўГҐГ°Г­ГіГІГј Г«Г®Г¦Гј
     return false;
 }
 
 bool Board::add(Piece* piece)
 {
-    // каждая клетка фигуры заполняется числом цвета фигуры
+    // ГЄГ Г¦Г¤Г Гї ГЄГ«ГҐГІГЄГ  ГґГЁГЈГіГ°Г» Г§Г ГЇГ®Г«Г­ГїГҐГІГ±Гї Г·ГЁГ±Г«Г®Г¬ Г¶ГўГҐГІГ  ГґГЁГЈГіГ°Г»
     for (int i = 0; i < 4; i++) 
     {
-        // если клетка в зоне появления фигур (~4 блока в высоту, центральные по иксу), вернуть false (gameover)
+        // ГҐГ±Г«ГЁ ГЄГ«ГҐГІГЄГ  Гў Г§Г®Г­ГҐ ГЇГ®ГїГўГ«ГҐГ­ГЁГї ГґГЁГЈГіГ° (~4 ГЎГ«Г®ГЄГ  Гў ГўГ»Г±Г®ГІГі, Г¶ГҐГ­ГІГ°Г Г«ГјГ­Г»ГҐ ГЇГ® ГЁГЄГ±Гі), ГўГҐГ°Г­ГіГІГј false (gameover)
         if ((piece->getPiecePosition().getY() + piece->getCurrentShape()[i].getY() < 4) && 
             (piece->getPiecePosition().getX() + piece->getCurrentShape()[i].getX() >4 && piece->getPiecePosition().getX() + piece->getCurrentShape()[i].getX() < 7))
             return false;
-        // иначе заполнить клетку цветом фигуры (число)
+        // ГЁГ­Г Г·ГҐ Г§Г ГЇГ®Г«Г­ГЁГІГј ГЄГ«ГҐГІГЄГі Г¶ГўГҐГІГ®Г¬ ГґГЁГЈГіГ°Г» (Г·ГЁГ±Г«Г®)
         board[piece->getPiecePosition().getX() + piece->getCurrentShape()[i].getX()]
              [piece->getPiecePosition().getY() + piece->getCurrentShape()[i].getY()] = piece->getCurrentColor();
-        // обновить текстуру клетки
+        // Г®ГЎГ­Г®ГўГЁГІГј ГІГҐГЄГ±ГІГіГ°Гі ГЄГ«ГҐГІГЄГЁ
         updateTexture(piece->getPiecePosition(), piece->getCurrentShape()[i], piece->getCurrentColor(), 40);
     }
     return true;
@@ -78,7 +75,7 @@ bool Board::add(Piece* piece)
 
 void Board::updateTexture(Cell piecePos, Cell shapeCell, int color, int tileSize)
 {
-    // обновить текстуру одиночной клетки
+    // Г®ГЎГ­Г®ГўГЁГІГј ГІГҐГЄГ±ГІГіГ°Гі Г®Г¤ГЁГ­Г®Г·Г­Г®Г© ГЄГ«ГҐГІГЄГЁ
     sf::Vertex* quad = &vertices[(piecePos.getX() + shapeCell.getX() + (piecePos.getY() + shapeCell.getY()) * this->boardWidth) * 4];
     quad[0].texCoords = sf::Vector2f(color * tileSize, 0);
     quad[1].texCoords = sf::Vector2f((color + 1) * tileSize, 0);
@@ -90,13 +87,13 @@ int Board::updateBoard()
 {
     bool FullRow = true;
     int lineCounter = 0;
-    // поиск с нижней строки (не учитывая границу) двигаясь вверх
+    // ГЇГ®ГЁГ±ГЄ Г± Г­ГЁГ¦Г­ГҐГ© Г±ГІГ°Г®ГЄГЁ (Г­ГҐ ГіГ·ГЁГІГ»ГўГ Гї ГЈГ°Г Г­ГЁГ¶Гі) Г¤ГўГЁГЈГ ГїГ±Гј ГўГўГҐГ°Гµ
     for (int y = this->boardHeight-2; y > 0; y--) 
     {
         FullRow = true;
         for (int x = 1; x < this->boardWidth - 1; x++) 
         {
-            // если хотя бы одна клетка пуста - линия не заполнена
+            // ГҐГ±Г«ГЁ ГµГ®ГІГї ГЎГ» Г®Г¤Г­Г  ГЄГ«ГҐГІГЄГ  ГЇГіГ±ГІГ  - Г«ГЁГ­ГЁГї Г­ГҐ Г§Г ГЇГ®Г«Г­ГҐГ­Г 
             if (board[x][y] == NONE)
                 FullRow = false;
         }
@@ -104,7 +101,7 @@ int Board::updateBoard()
         {
             pushRowDown(y);
             lineCounter++;
-            // возвращаем поиск в то же место, на случай если следующая строка тоже заполнена
+            // ГўГ®Г§ГўГ°Г Г№Г ГҐГ¬ ГЇГ®ГЁГ±ГЄ Гў ГІГ® Г¦ГҐ Г¬ГҐГ±ГІГ®, Г­Г  Г±Г«ГіГ·Г Г© ГҐГ±Г«ГЁ Г±Г«ГҐГ¤ГіГѕГ№Г Гї Г±ГІГ°Г®ГЄГ  ГІГ®Г¦ГҐ Г§Г ГЇГ®Г«Г­ГҐГ­Г 
             y++;
         }
     }
@@ -125,24 +122,24 @@ void Board::pushRowDown(int row)
 
 void Board::updateAllTextures(int tileSize) 
 {
-    // не отрисовываются стены
+    // Г­ГҐ Г®ГІГ°ГЁГ±Г®ГўГ»ГўГ ГѕГІГ±Гї Г±ГІГҐГ­Г»
     for (int i = 1; i < this->boardWidth - 1; i++) 
     {
         for (int j = 0; j < this->boardHeight-1; j++) 
         {
-            // число в клетке - её цвет
+            // Г·ГЁГ±Г«Г® Гў ГЄГ«ГҐГІГЄГҐ - ГҐВё Г¶ГўГҐГІ
             int tileNumber = board[i][j];
             
-            // указатель на текущий квадрат
+            // ГіГЄГ Г§Г ГІГҐГ«Гј Г­Г  ГІГҐГЄГіГ№ГЁГ© ГЄГўГ Г¤Г°Г ГІ
             sf::Vertex* quad = &vertices[(i + j * this->boardWidth) * 4];
 
-            // определение его 4 вершин
+            // Г®ГЇГ°ГҐГ¤ГҐГ«ГҐГ­ГЁГҐ ГҐГЈГ® 4 ГўГҐГ°ГёГЁГ­
             quad[0].position = sf::Vector2f(i * tileSize, j * tileSize);
             quad[1].position = sf::Vector2f((i + 1) * tileSize, j * tileSize);
             quad[2].position = sf::Vector2f((i + 1) * tileSize, (j + 1) * tileSize);
             quad[3].position = sf::Vector2f(i * tileSize, (j + 1) * tileSize);
 
-            // определение его 4х координат текстуры
+            // Г®ГЇГ°ГҐГ¤ГҐГ«ГҐГ­ГЁГҐ ГҐГЈГ® 4Гµ ГЄГ®Г®Г°Г¤ГЁГ­Г ГІ ГІГҐГЄГ±ГІГіГ°Г»
             quad[0].texCoords = sf::Vector2f(tileNumber * tileSize, 0);             
             quad[1].texCoords = sf::Vector2f((tileNumber + 1) * tileSize, 0);       
             quad[2].texCoords = sf::Vector2f((tileNumber + 1) * tileSize, tileSize);
