@@ -1,14 +1,13 @@
 #include "PieceCreating.h"
 
-PieceCreating::PieceCreating(int spawnX)
+PieceCreating::PieceCreating(int spawnX): spawnX(spawnX)
 {
-    this->spawnX = spawnX;
     fillVector();
 }
 
 void PieceCreating::fillVector() 
 {
-    // заполнение вектора всеми возможными фигурами (их представлениями в перечислении)
+    // Г§Г ГЇГ®Г«Г­ГҐГ­ГЁГҐ ГўГҐГЄГІГ®Г°Г  ГўГ±ГҐГ¬ГЁ ГўГ®Г§Г¬Г®Г¦Г­Г»Г¬ГЁ ГґГЁГЈГіГ°Г Г¬ГЁ (ГЁГµ ГЇГ°ГҐГ¤Г±ГІГ ГўГ«ГҐГ­ГЁГїГ¬ГЁ Гў ГЇГҐГ°ГҐГ·ГЁГ±Г«ГҐГ­ГЁГЁ)
     this->pieces.push_back(IP);
     this->pieces.push_back(JP);
     this->pieces.push_back(LP);
@@ -17,24 +16,24 @@ void PieceCreating::fillVector()
     this->pieces.push_back(TP);
     this->pieces.push_back(ZP);
 
-    // перемешивание фигур с помощью генератора случайных чисел
+    // ГЇГҐГ°ГҐГ¬ГҐГёГЁГўГ Г­ГЁГҐ ГґГЁГЈГіГ° Г± ГЇГ®Г¬Г®Г№ГјГѕ ГЈГҐГ­ГҐГ°Г ГІГ®Г°Г  Г±Г«ГіГ·Г Г©Г­Г»Гµ Г·ГЁГ±ГҐГ«
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::shuffle(this->pieces.begin(), this->pieces.end(), std::default_random_engine(seed));
 }
 
 Piece* PieceCreating::getPiece() 
 {
-    // если вектор пуст, то заполнить его заново
+    // ГҐГ±Г«ГЁ ГўГҐГЄГІГ®Г° ГЇГіГ±ГІ, ГІГ® Г§Г ГЇГ®Г«Г­ГЁГІГј ГҐГЈГ® Г§Г Г­Г®ГўГ®
     if (pieces.empty())
         fillVector();
 
-    // получение случайной фигуры
+    // ГЇГ®Г«ГіГ·ГҐГ­ГЁГҐ Г±Г«ГіГ·Г Г©Г­Г®Г© ГґГЁГЈГіГ°Г»
     int random = pieces[0];
 
-    // удаление её из вектора
+    // ГіГ¤Г Г«ГҐГ­ГЁГҐ ГҐВё ГЁГ§ ГўГҐГЄГІГ®Г°Г 
     pieces.erase(pieces.begin(), pieces.begin() + 1);
 
-    Piece* figure = NULL;
+    Piece* figure = nullptr;
     switch (random) 
     {
     case 1:
