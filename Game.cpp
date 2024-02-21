@@ -4,16 +4,16 @@ Game::Game  (sf::RenderWindow* window, int boardWidth, int boardHeight,
             bool volume, int* gamePartPtr, int* scorePtr,
             int* levelPtr, int* linesPtr, bool shadowFlag) 
 {
-    // øèğèíà + 2 (áîêîâûå ãğàíèöû)
+    // Ã¸Ã¨Ã°Ã¨Ã­Ã  + 2 (Ã¡Ã®ÃªÃ®Ã¢Ã»Ã¥ Ã£Ã°Ã Ã­Ã¨Ã¶Ã»)
     this->boardWidth    = boardWidth + 2;
-    // âûñîòà + 1 (íèæíÿÿ ãğàíèöà)
+    // Ã¢Ã»Ã±Ã®Ã²Ã  + 1 (Ã­Ã¨Ã¦Ã­Ã¿Ã¿ Ã£Ã°Ã Ã­Ã¨Ã¶Ã )
     this->boardHeight   = boardHeight + 1;
 
-    // èíèöèàëèçàöèÿ îáúåêòîâ êëàññîâ ïîëÿ è ñîçäàíèÿ ôèãóğ
+    // Ã¨Ã­Ã¨Ã¶Ã¨Ã Ã«Ã¨Ã§Ã Ã¶Ã¨Ã¿ Ã®Ã¡ÃºÃ¥ÃªÃ²Ã®Ã¢ ÃªÃ«Ã Ã±Ã±Ã®Ã¢ Ã¯Ã®Ã«Ã¿ Ã¨ Ã±Ã®Ã§Ã¤Ã Ã­Ã¨Ã¿ Ã´Ã¨Ã£Ã³Ã°
     this->gameBoard     = new Board(this->boardWidth, this->boardHeight);
     this->pieceCreating = new PieceCreating(this->boardWidth / 2 - 2);
 
-    // îïğåäåëåíèå âñåõ óêàçàòåëåé
+    // Ã®Ã¯Ã°Ã¥Ã¤Ã¥Ã«Ã¥Ã­Ã¨Ã¥ Ã¢Ã±Ã¥Ãµ Ã³ÃªÃ Ã§Ã Ã²Ã¥Ã«Ã¥Ã©
     this->window        = window;
     this->volume        = volume;
     this->gamePartPtr   = gamePartPtr;
@@ -22,25 +22,25 @@ Game::Game  (sf::RenderWindow* window, int boardWidth, int boardHeight,
     this->linesPtr      = linesPtr;
     this->shadowFlag    = shadowFlag;
 
-    // îòîáğàæåíèå ğåéòèíãà
+    // Ã®Ã²Ã®Ã¡Ã°Ã Ã¦Ã¥Ã­Ã¨Ã¥ Ã°Ã¥Ã©Ã²Ã¨Ã­Ã£Ã 
     scoreText.setFont(textFont);
     scoreText.setCharacterSize(24);
     scoreText.setFillColor(sf::Color(252, 242, 231, 255));
     
     setScore(score);
 
-    // îòîáğàæåíèå êîëè÷åñòâà óáğàííûõ ëèíèé
+    // Ã®Ã²Ã®Ã¡Ã°Ã Ã¦Ã¥Ã­Ã¨Ã¥ ÃªÃ®Ã«Ã¨Ã·Ã¥Ã±Ã²Ã¢Ã  Ã³Ã¡Ã°Ã Ã­Ã­Ã»Ãµ Ã«Ã¨Ã­Ã¨Ã©
     linesText.setFont(textFont);
     linesText.setCharacterSize(24);
     linesText.setFillColor(sf::Color(252, 242, 231, 255));
 
     setLines(totalRows);
 
-    // îïğåäåëåíèå îêíà ïàóçû
+    // Ã®Ã¯Ã°Ã¥Ã¤Ã¥Ã«Ã¥Ã­Ã¨Ã¥ Ã®ÃªÃ­Ã  Ã¯Ã Ã³Ã§Ã»
     pauseWindowTexture = Resources::getTexture("res/gamePaused.png");
     pauseWindow.setTexture(pauseWindowTexture);	
 
-    // êíîïêè
+    // ÃªÃ­Ã®Ã¯ÃªÃ¨
     pauseButton = new Button(sf::Vector2f(680, 330), Resources::getTexture("res/pauseNormal.png"), Resources::getTexture("res/pausePressed.png"));
     volumeButton = new Button(sf::Vector2f(80, 330), Resources::getTexture("res/volumeon.png"), Resources::getTexture("res/volumeoff.png"));
     shadowButton = new Button(sf::Vector2f(80, 430), Resources::getTexture("res/shadowNormal.png"), Resources::getTexture("res/shadowPressed.png"));
@@ -48,23 +48,23 @@ Game::Game  (sf::RenderWindow* window, int boardWidth, int boardHeight,
 
 void Game::run()
 {
-    // èíèöèàëèçàöèÿ ïîëÿ
+    // Ã¨Ã­Ã¨Ã¶Ã¨Ã Ã«Ã¨Ã§Ã Ã¶Ã¨Ã¿ Ã¯Ã®Ã«Ã¿
     gameBoard->initialization(40);
 
-    // ôîí èãğû
+    // Ã´Ã®Ã­ Ã¨Ã£Ã°Ã»
     sf::Sprite background;
     sf::Texture backgroundTexture = Resources::getTexture("res/background.png");
     background.setTexture(backgroundTexture);
 
-    // ïîëó÷åíèå òåêóùåé ôèãóğû
+    // Ã¯Ã®Ã«Ã³Ã·Ã¥Ã­Ã¨Ã¥ Ã²Ã¥ÃªÃ³Ã¹Ã¥Ã© Ã´Ã¨Ã£Ã³Ã°Ã»
     Piece* currentPiece = pieceCreating->getPiece();
-    // ïîëó÷åíèå ñëåäóşùåé ôèãóğû
+    // Ã¯Ã®Ã«Ã³Ã·Ã¥Ã­Ã¨Ã¥ Ã±Ã«Ã¥Ã¤Ã³Ã¾Ã¹Ã¥Ã© Ã´Ã¨Ã£Ã³Ã°Ã»
     Piece* nextPiece = pieceCreating->getPiece();
-    // ïîëó÷åíèå òåíè ôèãóğû
+    // Ã¯Ã®Ã«Ã³Ã·Ã¥Ã­Ã¨Ã¥ Ã²Ã¥Ã­Ã¨ Ã´Ã¨Ã£Ã³Ã°Ã»
     Piece* shadowPiece = pieceCreating->getShadowPiece(currentPiece);
     setShadowPosition(currentPiece, shadowPiece);
 
-    // îêíî ñëåäóşùåé ôèãóğû
+    // Ã®ÃªÃ­Ã® Ã±Ã«Ã¥Ã¤Ã³Ã¾Ã¹Ã¥Ã© Ã´Ã¨Ã£Ã³Ã°Ã»
     NextPieceBoard nextBoard(nextPiece, 40);
 
     if (volume)
@@ -72,33 +72,33 @@ void Game::run()
     else
         GameSound::stop(0);
 
-    // ôëàã áûñòğîãî ïàäåíèÿ
+    // Ã´Ã«Ã Ã£ Ã¡Ã»Ã±Ã²Ã°Ã®Ã£Ã® Ã¯Ã Ã¤Ã¥Ã­Ã¨Ã¿
     bool fastFallFlag = false;
-    // ôëàã ìãíîâåííîãî ïàäåíèÿ
+    // Ã´Ã«Ã Ã£ Ã¬Ã£Ã­Ã®Ã¢Ã¥Ã­Ã­Ã®Ã£Ã® Ã¯Ã Ã¤Ã¥Ã­Ã¨Ã¿
     bool instantFall = false;
-    // ôëàã ïàóçû
+    // Ã´Ã«Ã Ã£ Ã¯Ã Ã³Ã§Ã»
     bool pausedFlag = false;
 
-    // óñòàíîâêà ÷àñîâ äëÿ ïîäñ÷¸òà âğåìåíè
+    // Ã³Ã±Ã²Ã Ã­Ã®Ã¢ÃªÃ  Ã·Ã Ã±Ã®Ã¢ Ã¤Ã«Ã¿ Ã¯Ã®Ã¤Ã±Ã·Â¸Ã²Ã  Ã¢Ã°Ã¥Ã¬Ã¥Ã­Ã¨
     sf::Clock frameClock;
     sf::Clock keyClock;
     sf::Time frameTime = frameClock.getElapsedTime();
     sf::Time keyTime = keyClock.getElapsedTime();
 
-    // îñíîâíîé èãğîâîé öèêë
+    // Ã®Ã±Ã­Ã®Ã¢Ã­Ã®Ã© Ã¨Ã£Ã°Ã®Ã¢Ã®Ã© Ã¶Ã¨ÃªÃ«
     while (window->isOpen())
     {
-        // ïîçèöèÿ ìûøè
+        // Ã¯Ã®Ã§Ã¨Ã¶Ã¨Ã¿ Ã¬Ã»Ã¸Ã¨
         sf::Vector2f mousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 
-        // âõîä â îñíîâíîå ìåíş
+        // Ã¢ÃµÃ®Ã¤ Ã¢ Ã®Ã±Ã­Ã®Ã¢Ã­Ã®Ã¥ Ã¬Ã¥Ã­Ã¾
         if (*gamePartPtr == MENU)
         {
             GameSound::stop(0);
             break;
         }
 
-        // åñëè èñòèíåí ôëàã êîíöà èãğû
+        // Ã¥Ã±Ã«Ã¨ Ã¨Ã±Ã²Ã¨Ã­Ã¥Ã­ Ã´Ã«Ã Ã£ ÃªÃ®Ã­Ã¶Ã  Ã¨Ã£Ã°Ã»
         if (gameOver)
         {
             GameSound::stop(0);
@@ -116,23 +116,23 @@ void Game::run()
 
         sf::Event event;
 
-        // îáğàáîòêà ñîáûòèé â î÷åğåäè (çàêğûòèå îêíà è êëàâèøè ïîâîğîòà ôèãóğû/âûõîäà/ïàóçû)
+        // Ã®Ã¡Ã°Ã Ã¡Ã®Ã²ÃªÃ  Ã±Ã®Ã¡Ã»Ã²Ã¨Ã© Ã¢ Ã®Ã·Ã¥Ã°Ã¥Ã¤Ã¨ (Ã§Ã ÃªÃ°Ã»Ã²Ã¨Ã¥ Ã®ÃªÃ­Ã  Ã¨ ÃªÃ«Ã Ã¢Ã¨Ã¸Ã¨ Ã¯Ã®Ã¢Ã®Ã°Ã®Ã²Ã  Ã´Ã¨Ã£Ã³Ã°Ã»/Ã¢Ã»ÃµÃ®Ã¤Ã /Ã¯Ã Ã³Ã§Ã»)
         while (window->pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
                 window->close();
 
-            // åñëè èãğà íå íà ïàóçå
+            // Ã¥Ã±Ã«Ã¨ Ã¨Ã£Ã°Ã  Ã­Ã¥ Ã­Ã  Ã¯Ã Ã³Ã§Ã¥
             if (!pausedFlag)
             {
-                // íàæàòà êíîïêà ïàóçû, òî ïîñòàâèòü èãğó íà ïàóçó
+                // Ã­Ã Ã¦Ã Ã²Ã  ÃªÃ­Ã®Ã¯ÃªÃ  Ã¯Ã Ã³Ã§Ã», Ã²Ã® Ã¯Ã®Ã±Ã²Ã Ã¢Ã¨Ã²Ã¼ Ã¨Ã£Ã°Ã³ Ã­Ã  Ã¯Ã Ã³Ã§Ã³
                 if (pauseButton->updateButton(mousePos))
                 {
                     GameSound::play(1);
                     GameSound::stop(0);
                     pausedFlag = !pausedFlag;
                 }
-                // íàæàòà êíîïêà çâóêà, òî âêëş÷èòü/âûêëş÷èòü çâóê
+                // Ã­Ã Ã¦Ã Ã²Ã  ÃªÃ­Ã®Ã¯ÃªÃ  Ã§Ã¢Ã³ÃªÃ , Ã²Ã® Ã¢ÃªÃ«Ã¾Ã·Ã¨Ã²Ã¼/Ã¢Ã»ÃªÃ«Ã¾Ã·Ã¨Ã²Ã¼ Ã§Ã¢Ã³Ãª
                 else if (volumeButton->updateButton(mousePos))
                 {
                     GameSound::play(1);
@@ -142,14 +142,14 @@ void Game::run()
                     else
                         GameSound::stop(0);
                 }
-                // íàæàòà êíîïêà òåíè, òî âêëş÷èòü/âûêëş÷èòü òåíü
+                // Ã­Ã Ã¦Ã Ã²Ã  ÃªÃ­Ã®Ã¯ÃªÃ  Ã²Ã¥Ã­Ã¨, Ã²Ã® Ã¢ÃªÃ«Ã¾Ã·Ã¨Ã²Ã¼/Ã¢Ã»ÃªÃ«Ã¾Ã·Ã¨Ã²Ã¼ Ã²Ã¥Ã­Ã¼
                 else if (shadowButton->updateButton(mousePos))
                 {
                     GameSound::play(1);
                     shadowFlag = !shadowFlag;
                 }
             }
-            // åñëè èãğà íà ïàóçå, òî ïğîäîëæèòü èãğàòü ìîæíî íàæàâ ââîä/ïğîáåë (â óñëîâèè äàëüøå åù¸ P)
+            // Ã¥Ã±Ã«Ã¨ Ã¨Ã£Ã°Ã  Ã­Ã  Ã¯Ã Ã³Ã§Ã¥, Ã²Ã® Ã¯Ã°Ã®Ã¤Ã®Ã«Ã¦Ã¨Ã²Ã¼ Ã¨Ã£Ã°Ã Ã²Ã¼ Ã¬Ã®Ã¦Ã­Ã® Ã­Ã Ã¦Ã Ã¢ Ã¢Ã¢Ã®Ã¤/Ã¯Ã°Ã®Ã¡Ã¥Ã« (Ã¢ Ã³Ã±Ã«Ã®Ã¢Ã¨Ã¨ Ã¤Ã Ã«Ã¼Ã¸Ã¥ Ã¥Ã¹Â¸ P)
             if (pausedFlag && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)))
             {
                 pausedFlag = !pausedFlag;
@@ -193,7 +193,7 @@ void Game::run()
             }
         }
 
-        // îáğàáîòêà ñîáûòèé íåïğåğûâíîãî ââîäà êëàâèø (äëÿ áîëåå ïëàâíîé èãğû íåçàâèñèìî îò î÷åğåäè ñîáûòèé)
+        // Ã®Ã¡Ã°Ã Ã¡Ã®Ã²ÃªÃ  Ã±Ã®Ã¡Ã»Ã²Ã¨Ã© Ã­Ã¥Ã¯Ã°Ã¥Ã°Ã»Ã¢Ã­Ã®Ã£Ã® Ã¢Ã¢Ã®Ã¤Ã  ÃªÃ«Ã Ã¢Ã¨Ã¸ (Ã¤Ã«Ã¿ Ã¡Ã®Ã«Ã¥Ã¥ Ã¯Ã«Ã Ã¢Ã­Ã®Ã© Ã¨Ã£Ã°Ã» Ã­Ã¥Ã§Ã Ã¢Ã¨Ã±Ã¨Ã¬Ã® Ã®Ã² Ã®Ã·Ã¥Ã°Ã¥Ã¤Ã¨ Ã±Ã®Ã¡Ã»Ã²Ã¨Ã©)
         keyTime = keyClock.getElapsedTime();
 
         if (!pausedFlag)
@@ -224,7 +224,7 @@ void Game::run()
             }
         }
 
-        // îòğèñîâêà
+        // Ã®Ã²Ã°Ã¨Ã±Ã®Ã¢ÃªÃ 
         window->clear();
         window->draw(background);
         window->draw(nextBoard);
@@ -244,43 +244,43 @@ void Game::run()
 
         window->display();
 
-        // ïàäåíèå ôèãóğ
+        // Ã¯Ã Ã¤Ã¥Ã­Ã¨Ã¥ Ã´Ã¨Ã£Ã³Ã°
         frameTime = frameClock.getElapsedTime();
         if (!pausedFlag && (fastFallFlag || (frameTime.asSeconds() > 1 - (level - 1) * 0.025)))
         {
             frameClock.restart();
 
-            // åñëè ïàäåíèå ôèãóğû íà 1 âíèç íåâîçìîæíî
+            // Ã¥Ã±Ã«Ã¨ Ã¯Ã Ã¤Ã¥Ã­Ã¨Ã¥ Ã´Ã¨Ã£Ã³Ã°Ã» Ã­Ã  1 Ã¢Ã­Ã¨Ã§ Ã­Ã¥Ã¢Ã®Ã§Ã¬Ã®Ã¦Ã­Ã®
             if (!fallDown(currentPiece))
             {
-                // add âîçâğàùàåò true åñëè ôèãóğà äîáàâëåíà óñïåøíî
+                // add Ã¢Ã®Ã§Ã¢Ã°Ã Ã¹Ã Ã¥Ã² true Ã¥Ã±Ã«Ã¨ Ã´Ã¨Ã£Ã³Ã°Ã  Ã¤Ã®Ã¡Ã Ã¢Ã«Ã¥Ã­Ã  Ã³Ã±Ã¯Ã¥Ã¸Ã­Ã®
                 gameOver = !gameBoard->add(currentPiece);
 
                 delete currentPiece;
                 delete shadowPiece;
 
-                // ñëåäóşùàÿ ôèãóğà ñòàíîâèòñÿ òåêóùåé
+                // Ã±Ã«Ã¥Ã¤Ã³Ã¾Ã¹Ã Ã¿ Ã´Ã¨Ã£Ã³Ã°Ã  Ã±Ã²Ã Ã­Ã®Ã¢Ã¨Ã²Ã±Ã¿ Ã²Ã¥ÃªÃ³Ã¹Ã¥Ã©
                 currentPiece = nextPiece;
                 currentPiece->setPiecePosition(this->boardWidth / 2 - 1, 0);
 
-                // íîâàÿ ñëåäóşùàÿ ôèãóğà
+                // Ã­Ã®Ã¢Ã Ã¿ Ã±Ã«Ã¥Ã¤Ã³Ã¾Ã¹Ã Ã¿ Ã´Ã¨Ã£Ã³Ã°Ã 
                 nextPiece = pieceCreating->getPiece();
                 nextBoard.setPiece(nextPiece);
 
-                // íîâàÿ ôèãóğà òåíè
+                // Ã­Ã®Ã¢Ã Ã¿ Ã´Ã¨Ã£Ã³Ã°Ã  Ã²Ã¥Ã­Ã¨
                 shadowPiece = pieceCreating->getShadowPiece(currentPiece);
 
-                // óäàëåíèå çàïîëíåííûõ ëèíèé
-                // ïîëó÷àåì ÷èñëî î÷èùåííûõ ñòğîê ñ ïîìîùüş ìåòîäà updateBoard()
+                // Ã³Ã¤Ã Ã«Ã¥Ã­Ã¨Ã¥ Ã§Ã Ã¯Ã®Ã«Ã­Ã¥Ã­Ã­Ã»Ãµ Ã«Ã¨Ã­Ã¨Ã©
+                // Ã¯Ã®Ã«Ã³Ã·Ã Ã¥Ã¬ Ã·Ã¨Ã±Ã«Ã® Ã®Ã·Ã¨Ã¹Ã¥Ã­Ã­Ã»Ãµ Ã±Ã²Ã°Ã®Ãª Ã± Ã¯Ã®Ã¬Ã®Ã¹Ã¼Ã¾ Ã¬Ã¥Ã²Ã®Ã¤Ã  updateBoard()
                 int clearedRows = gameBoard->updateBoard();
 
                 if (clearedRows)
                     GameSound::play(2);
 
-                // îáíîâëåíèå ïîçèöèè òåíè ôèãóğû
+                // Ã®Ã¡Ã­Ã®Ã¢Ã«Ã¥Ã­Ã¨Ã¥ Ã¯Ã®Ã§Ã¨Ã¶Ã¨Ã¨ Ã²Ã¥Ã­Ã¨ Ã´Ã¨Ã£Ã³Ã°Ã»
                 setShadowPosition(currentPiece, shadowPiece);
 
-                // îáíîâëåíèå ğåéòèíãà è óğîâíÿ
+                // Ã®Ã¡Ã­Ã®Ã¢Ã«Ã¥Ã­Ã¨Ã¥ Ã°Ã¥Ã©Ã²Ã¨Ã­Ã£Ã  Ã¨ Ã³Ã°Ã®Ã¢Ã­Ã¿
                 this->totalRows += clearedRows;
 
                 updateScore(clearedRows);
@@ -288,45 +288,45 @@ void Game::run()
             }
             fastFallFlag = false;
 
-            // îáíîâëåíèå îòîáğàæåíèÿ ğåéòèíãà è êîëè÷åñòâà óáğàííûõ ëèíèé íà ıêğàíå
+            // Ã®Ã¡Ã­Ã®Ã¢Ã«Ã¥Ã­Ã¨Ã¥ Ã®Ã²Ã®Ã¡Ã°Ã Ã¦Ã¥Ã­Ã¨Ã¿ Ã°Ã¥Ã©Ã²Ã¨Ã­Ã£Ã  Ã¨ ÃªÃ®Ã«Ã¨Ã·Ã¥Ã±Ã²Ã¢Ã  Ã³Ã¡Ã°Ã Ã­Ã­Ã»Ãµ Ã«Ã¨Ã­Ã¨Ã© Ã­Ã  Ã½ÃªÃ°Ã Ã­Ã¥
             setScore(score);
             setLines(totalRows);
         }
         if (!pausedFlag && instantFall)
         {
-            // óâåëè÷åíèå ğåéòèíãà ïğè ìãíîâåííîì ïàäåíèè
+            // Ã³Ã¢Ã¥Ã«Ã¨Ã·Ã¥Ã­Ã¨Ã¥ Ã°Ã¥Ã©Ã²Ã¨Ã­Ã£Ã  Ã¯Ã°Ã¨ Ã¬Ã£Ã­Ã®Ã¢Ã¥Ã­Ã­Ã®Ã¬ Ã¯Ã Ã¤Ã¥Ã­Ã¨Ã¨
             this->score += 10;
 
             currentPiece->setPiecePosition(shadowPiece->getPiecePosition().getX(), shadowPiece->getPiecePosition().getY());
 
-            // add âîçâğàùàåò true åñëè ôèãóğà äîáàâëåíà óñïåøíî
+            // add Ã¢Ã®Ã§Ã¢Ã°Ã Ã¹Ã Ã¥Ã² true Ã¥Ã±Ã«Ã¨ Ã´Ã¨Ã£Ã³Ã°Ã  Ã¤Ã®Ã¡Ã Ã¢Ã«Ã¥Ã­Ã  Ã³Ã±Ã¯Ã¥Ã¸Ã­Ã®
             gameOver = !gameBoard->add(currentPiece);
 
             delete currentPiece;
             delete shadowPiece;
 
-            // ñëåäóşùàÿ ôèãóğà ñòàíîâèòñÿ òåêóùåé
+            // Ã±Ã«Ã¥Ã¤Ã³Ã¾Ã¹Ã Ã¿ Ã´Ã¨Ã£Ã³Ã°Ã  Ã±Ã²Ã Ã­Ã®Ã¢Ã¨Ã²Ã±Ã¿ Ã²Ã¥ÃªÃ³Ã¹Ã¥Ã©
             currentPiece = nextPiece;
             currentPiece->setPiecePosition(this->boardWidth / 2 - 1, 0);
 
-            // íîâàÿ ñëåäóşùàÿ ôèãóğà
+            // Ã­Ã®Ã¢Ã Ã¿ Ã±Ã«Ã¥Ã¤Ã³Ã¾Ã¹Ã Ã¿ Ã´Ã¨Ã£Ã³Ã°Ã 
             nextPiece = pieceCreating->getPiece();
             nextBoard.setPiece(nextPiece);
 
-            // íîâàÿ ôèãóğà òåíè
+            // Ã­Ã®Ã¢Ã Ã¿ Ã´Ã¨Ã£Ã³Ã°Ã  Ã²Ã¥Ã­Ã¨
             shadowPiece = pieceCreating->getShadowPiece(currentPiece);
 
-            // óäàëåíèå çàïîëíåííûõ ëèíèé
-            // ïîëó÷àåì ÷èñëî î÷èùåííûõ ñòğîê ñ ïîìîùüş ìåòîäà updateBoard()
+            // Ã³Ã¤Ã Ã«Ã¥Ã­Ã¨Ã¥ Ã§Ã Ã¯Ã®Ã«Ã­Ã¥Ã­Ã­Ã»Ãµ Ã«Ã¨Ã­Ã¨Ã©
+            // Ã¯Ã®Ã«Ã³Ã·Ã Ã¥Ã¬ Ã·Ã¨Ã±Ã«Ã® Ã®Ã·Ã¨Ã¹Ã¥Ã­Ã­Ã»Ãµ Ã±Ã²Ã°Ã®Ãª Ã± Ã¯Ã®Ã¬Ã®Ã¹Ã¼Ã¾ Ã¬Ã¥Ã²Ã®Ã¤Ã  updateBoard()
             int clearedRows = gameBoard->updateBoard();
 
              if (clearedRows)
                  GameSound::play(2);
 
-            // îáíîâëåíèå ïîçèöèè òåíè ôèãóğû
+            // Ã®Ã¡Ã­Ã®Ã¢Ã«Ã¥Ã­Ã¨Ã¥ Ã¯Ã®Ã§Ã¨Ã¶Ã¨Ã¨ Ã²Ã¥Ã­Ã¨ Ã´Ã¨Ã£Ã³Ã°Ã»
             setShadowPosition(currentPiece, shadowPiece);
 
-            // îáíîâëåíèå ğåéòèíãà è óğîâíÿ
+            // Ã®Ã¡Ã­Ã®Ã¢Ã«Ã¥Ã­Ã¨Ã¥ Ã°Ã¥Ã©Ã²Ã¨Ã­Ã£Ã  Ã¨ Ã³Ã°Ã®Ã¢Ã­Ã¿
             this->totalRows += clearedRows;
 
             updateScore(clearedRows);
@@ -334,7 +334,7 @@ void Game::run()
 
             instantFall = false;
 
-            // îáíîâëåíèå îòîáğàæåíèÿ ğåéòèíãà è êîëè÷åñòâà óáğàííûõ ëèíèé íà ıêğàíå
+            // Ã®Ã¡Ã­Ã®Ã¢Ã«Ã¥Ã­Ã¨Ã¥ Ã®Ã²Ã®Ã¡Ã°Ã Ã¦Ã¥Ã­Ã¨Ã¿ Ã°Ã¥Ã©Ã²Ã¨Ã­Ã£Ã  Ã¨ ÃªÃ®Ã«Ã¨Ã·Ã¥Ã±Ã²Ã¢Ã  Ã³Ã¡Ã°Ã Ã­Ã­Ã»Ãµ Ã«Ã¨Ã­Ã¨Ã© Ã­Ã  Ã½ÃªÃ°Ã Ã­Ã¥
             setScore(score);
             setLines(totalRows);
         }
@@ -343,15 +343,15 @@ void Game::run()
 
 bool Game::moveLeft(Piece* piece, Piece* shadowPiece) 
 {
-    // åñëè íå áóäåò ñòîëêíîâåíèÿ ïğè äâèæåíèè âëåâî
+    // Ã¥Ã±Ã«Ã¨ Ã­Ã¥ Ã¡Ã³Ã¤Ã¥Ã² Ã±Ã²Ã®Ã«ÃªÃ­Ã®Ã¢Ã¥Ã­Ã¨Ã¿ Ã¯Ã°Ã¨ Ã¤Ã¢Ã¨Ã¦Ã¥Ã­Ã¨Ã¨ Ã¢Ã«Ã¥Ã¢Ã®
     if (!gameBoard->collidesWith(piece->getPiecePosition().getX() - 1,
                                  piece->getPiecePosition().getY(),
                                  piece->getCurrentShape())) 
     {
-        // óñòàíîâèòü íîâóş ïîçèöèş ôèãóğû íà ïîëå
+        // Ã³Ã±Ã²Ã Ã­Ã®Ã¢Ã¨Ã²Ã¼ Ã­Ã®Ã¢Ã³Ã¾ Ã¯Ã®Ã§Ã¨Ã¶Ã¨Ã¾ Ã´Ã¨Ã£Ã³Ã°Ã» Ã­Ã  Ã¯Ã®Ã«Ã¥
         piece->setPiecePosition(piece->getPiecePosition().getX() - 1, 
                                 piece->getPiecePosition().getY());
-        // óñòàíîâèòü íîâóş ïîçèöèş òåíè íà ïîëå
+        // Ã³Ã±Ã²Ã Ã­Ã®Ã¢Ã¨Ã²Ã¼ Ã­Ã®Ã¢Ã³Ã¾ Ã¯Ã®Ã§Ã¨Ã¶Ã¨Ã¾ Ã²Ã¥Ã­Ã¨ Ã­Ã  Ã¯Ã®Ã«Ã¥
         setShadowPosition(piece, shadowPiece);
         return true;
     }
@@ -360,15 +360,15 @@ bool Game::moveLeft(Piece* piece, Piece* shadowPiece)
 
 bool Game::moveRight(Piece* piece, Piece* shadowPiece)
 {
-    // åñëè íå áóäåò ñòîëêíîâåíèÿ ïğè äâèæåíèè âïğàâî
+    // Ã¥Ã±Ã«Ã¨ Ã­Ã¥ Ã¡Ã³Ã¤Ã¥Ã² Ã±Ã²Ã®Ã«ÃªÃ­Ã®Ã¢Ã¥Ã­Ã¨Ã¿ Ã¯Ã°Ã¨ Ã¤Ã¢Ã¨Ã¦Ã¥Ã­Ã¨Ã¨ Ã¢Ã¯Ã°Ã Ã¢Ã®
     if (!gameBoard->collidesWith(piece->getPiecePosition().getX() + 1,
                                  piece->getPiecePosition().getY(),
                                  piece->getCurrentShape())) 
     {
-        // óñòàíîâèòü íîâóş ïîçèöèş ôèãóğû íà ïîëå
+        // Ã³Ã±Ã²Ã Ã­Ã®Ã¢Ã¨Ã²Ã¼ Ã­Ã®Ã¢Ã³Ã¾ Ã¯Ã®Ã§Ã¨Ã¶Ã¨Ã¾ Ã´Ã¨Ã£Ã³Ã°Ã» Ã­Ã  Ã¯Ã®Ã«Ã¥
         piece->setPiecePosition(piece->getPiecePosition().getX() + 1, 
                                 piece->getPiecePosition().getY());
-        // óñòàíîâèòü íîâóş ïîçèöèş òåíè íà ïîëå
+        // Ã³Ã±Ã²Ã Ã­Ã®Ã¢Ã¨Ã²Ã¼ Ã­Ã®Ã¢Ã³Ã¾ Ã¯Ã®Ã§Ã¨Ã¶Ã¨Ã¾ Ã²Ã¥Ã­Ã¨ Ã­Ã  Ã¯Ã®Ã«Ã¥
         setShadowPosition(piece, shadowPiece);
         return true;
     }
@@ -377,14 +377,14 @@ bool Game::moveRight(Piece* piece, Piece* shadowPiece)
 
 bool Game::rotate(Piece* piece, Piece* shadowPiece)
 {
-    // åñëè íå áóäåò ñòîëêíîâåíèÿ ïîñëå ïîâîğîòà
+    // Ã¥Ã±Ã«Ã¨ Ã­Ã¥ Ã¡Ã³Ã¤Ã¥Ã² Ã±Ã²Ã®Ã«ÃªÃ­Ã®Ã¢Ã¥Ã­Ã¨Ã¿ Ã¯Ã®Ã±Ã«Ã¥ Ã¯Ã®Ã¢Ã®Ã°Ã®Ã²Ã 
     if (!gameBoard->collidesWith(piece->getPiecePosition().getX(),
                                  piece->getPiecePosition().getY(),
                                  piece->getRotationShape())) 
     {
-        // ïîâåğíóòü ôèãóğó
+        // Ã¯Ã®Ã¢Ã¥Ã°Ã­Ã³Ã²Ã¼ Ã´Ã¨Ã£Ã³Ã°Ã³
         piece->rotate();
-        // ïîâåğíóòü òåíü
+        // Ã¯Ã®Ã¢Ã¥Ã°Ã­Ã³Ã²Ã¼ Ã²Ã¥Ã­Ã¼
         setShadowPosition(piece, shadowPiece);
         return true;
     }
@@ -393,12 +393,12 @@ bool Game::rotate(Piece* piece, Piece* shadowPiece)
 //
 bool Game::fallDown(Piece* piece) 
 {
-    // åñëè ïîñëå ïàäåíèÿ íå áóäåò ñòîëêíîâåíèÿ
+    // Ã¥Ã±Ã«Ã¨ Ã¯Ã®Ã±Ã«Ã¥ Ã¯Ã Ã¤Ã¥Ã­Ã¨Ã¿ Ã­Ã¥ Ã¡Ã³Ã¤Ã¥Ã² Ã±Ã²Ã®Ã«ÃªÃ­Ã®Ã¢Ã¥Ã­Ã¨Ã¿
     if (!gameBoard->collidesWith(piece->getPiecePosition().getX(),
                                  piece->getPiecePosition().getY() + 1,
                                  piece->getCurrentShape())) 
     {
-        // îïóñòèòü ôèãóğó
+        // Ã®Ã¯Ã³Ã±Ã²Ã¨Ã²Ã¼ Ã´Ã¨Ã£Ã³Ã°Ã³
         piece->setPiecePosition(piece->getPiecePosition().getX(), piece->getPiecePosition().getY() + 1);
         return true;
     }
@@ -407,13 +407,13 @@ bool Game::fallDown(Piece* piece)
 
 void Game::setShadowPosition(Piece* currentPiece, Piece* shadowPiece)
 {
-    // óñòàíîâèòü ïîâîğîò òåíè òàêèì æå êàê ó ôèãóğû
+    // Ã³Ã±Ã²Ã Ã­Ã®Ã¢Ã¨Ã²Ã¼ Ã¯Ã®Ã¢Ã®Ã°Ã®Ã² Ã²Ã¥Ã­Ã¨ Ã²Ã ÃªÃ¨Ã¬ Ã¦Ã¥ ÃªÃ Ãª Ã³ Ã´Ã¨Ã£Ã³Ã°Ã»
     shadowPiece->setRotation(currentPiece->getRotation());
-    // óñòàíîâèòü ïîçèöèş òåíè òàêîé æå êàê ó ôèãóğû
+    // Ã³Ã±Ã²Ã Ã­Ã®Ã¢Ã¨Ã²Ã¼ Ã¯Ã®Ã§Ã¨Ã¶Ã¨Ã¾ Ã²Ã¥Ã­Ã¨ Ã²Ã ÃªÃ®Ã© Ã¦Ã¥ ÃªÃ Ãª Ã³ Ã´Ã¨Ã£Ã³Ã°Ã»
     shadowPiece->setPiecePosition(currentPiece->getPiecePosition());
 
-    // íàéòè íèæàéøåå âîçìîæíîå ïîëîæåíèå òåíè
-    // (äâèæåíèå âíèç äî îáíàğóæåíèÿ ñòîëêíîâåíèÿ)
+    // Ã­Ã Ã©Ã²Ã¨ Ã­Ã¨Ã¦Ã Ã©Ã¸Ã¥Ã¥ Ã¢Ã®Ã§Ã¬Ã®Ã¦Ã­Ã®Ã¥ Ã¯Ã®Ã«Ã®Ã¦Ã¥Ã­Ã¨Ã¥ Ã²Ã¥Ã­Ã¨
+    // (Ã¤Ã¢Ã¨Ã¦Ã¥Ã­Ã¨Ã¥ Ã¢Ã­Ã¨Ã§ Ã¤Ã® Ã®Ã¡Ã­Ã Ã°Ã³Ã¦Ã¥Ã­Ã¨Ã¿ Ã±Ã²Ã®Ã«ÃªÃ­Ã®Ã¢Ã¥Ã­Ã¨Ã¿)
     while (!gameBoard->collidesWith(shadowPiece->getPiecePosition().getX(),
                                     shadowPiece->getPiecePosition().getY() + 1,
                                     shadowPiece->getCurrentShape())) 
@@ -425,7 +425,7 @@ void Game::setShadowPosition(Piece* currentPiece, Piece* shadowPiece)
 //
 void Game::updateScore(int clearedRows) 
 {
-    // óâåëè÷åíèå ğåéòèíãà íà îñíîâàíèè êîëè÷åñòâà óäàë¸ííûõ ëèíèé
+    // Ã³Ã¢Ã¥Ã«Ã¨Ã·Ã¥Ã­Ã¨Ã¥ Ã°Ã¥Ã©Ã²Ã¨Ã­Ã£Ã  Ã­Ã  Ã®Ã±Ã­Ã®Ã¢Ã Ã­Ã¨Ã¨ ÃªÃ®Ã«Ã¨Ã·Ã¥Ã±Ã²Ã¢Ã  Ã³Ã¤Ã Ã«Â¸Ã­Ã­Ã»Ãµ Ã«Ã¨Ã­Ã¨Ã©
     switch (clearedRows) 
     {
     case 1:
@@ -439,6 +439,8 @@ void Game::updateScore(int clearedRows)
         break;
     case 4:
         this->score += 750 * this->level;
+        break;
+    default:
         break;
     }
 }
